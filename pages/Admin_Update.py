@@ -3,20 +3,14 @@ import sqlite3
 
 st.title("Admin Slot Update Panel")
 
-# ------------------ GET SELECTED BLOCK ------------------
-
 block = st.session_state.get("selected_block")
 
 if not block:
     st.error("No block selected.")
     st.stop()
 
-# ------------------ CONNECT TO DATABASE ------------------
-
 conn = sqlite3.connect("parking.db")
 cursor = conn.cursor()
-
-# ------------------ FETCH SLOT DATA ------------------
 
 cursor.execute("""
 SELECT slot_number, status
@@ -40,8 +34,6 @@ left_col, middle, right_col = st.columns([2,1,2])
 
 updated_slots = {}
 
-# ------------------ LEFT SIDE (1–10) ------------------
-
 with left_col:
     st.markdown("### Left Side")
     for i in range(1, 11):
@@ -52,8 +44,6 @@ with left_col:
             key=f"{block}_slot_{i}"
         )
         updated_slots[i] = "O" if value else "F"
-
-# ------------------ RIGHT SIDE (11–20) ------------------
 
 with right_col:
     st.markdown("### Right Side")
@@ -67,8 +57,6 @@ with right_col:
         updated_slots[i] = "O" if value else "F"
 
 st.divider()
-
-# ------------------ SAVE BUTTON ------------------
 
 if st.button("Save Changes"):
 
@@ -107,3 +95,10 @@ if st.button("Save Changes"):
     conn.close()
 
     st.success("Slots and pricing updated successfully ✅")
+st.markdown("---")
+
+if st.button("🔙 Back to Home"):
+    st.markdown(
+        '<a href="/" target="_self">Go to Home</a>',
+        unsafe_allow_html=True
+    )
