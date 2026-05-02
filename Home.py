@@ -7,6 +7,6 @@ role = st.radio("Login as", ["Driver", "Admin"])
 
 if st.button("Login"):
     if role == "Driver":
-        st.success("👉 Go to 'Driver_Login' from the sidebar")
+        st.switch_page("1_Driver_Login")
     else:
         st.success("👉 Go to 'Admin_Login' from the sidebar")
