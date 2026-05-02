@@ -5,8 +5,8 @@ st.subheader("Login Screen")
 
 role = st.radio("Login as", ["Driver", "Admin"])
 
-if st.button("Login"):
-    if role == "Driver":
-        st.switch_page("1_Driver_Login")
-    else:
-        st.success("👉 Go to 'Admin_Login' from the sidebar")
+if role == "Driver":
+    st.page_link("pages/1_Driver_Login.py", label="Login as Driver")
+
+else:
+    st.page_link("pages/Admin_Login.py", label="Login as Admin")
