@@ -15,7 +15,7 @@ if st.button("Login"):
         st.session_state.page = "admin_login"
 
 if st.session_state.page == "driver_login":
-    st.switch_page("pages/Driver_Login.py")
+    st.switch_page("Driver_Login")
 
 elif st.session_state.page == "admin_login":
-    st.switch_page("pages/Admin_Login.py")
+    st.switch_page("Admin_Login")
