@@ -5,8 +5,39 @@ st.subheader("Login Screen")
 
 role = st.radio("Login as", ["Driver", "Admin"])
 
+st.write("")  # spacing
+
+# Button-style navigation
 if role == "Driver":
-    st.page_link("pages/1_Driver_Login.py", label="Login as Driver")
+    st.markdown("""
+        <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+        }
+        </style>
+        <a href="/Driver_Login" target="_self" class="btn">Login</a>
+    """, unsafe_allow_html=True)
 
 else:
-    st.page_link("pages/Admin_Login.py", label="Login as Admin")
+    st.markdown("""
+        <style>
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+        }
+        </style>
+        <a href="/Admin_Login" target="_self" class="btn">Login</a>
+    """, unsafe_allow_html=True)
