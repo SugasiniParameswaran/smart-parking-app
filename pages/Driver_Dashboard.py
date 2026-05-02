@@ -1,15 +1,11 @@
 import streamlit as st
 import sqlite3
 
-# -------------------- GET SELECTED BLOCK --------------------
-
 block = st.session_state.get("selected_block")
 
 if not block:
     st.error("No block selected.")
     st.stop()
-
-# -------------------- DESIGN STYLING --------------------
 
 st.markdown("""
 <style>
@@ -40,8 +36,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# -------------------- FETCH SLOT DATA FROM DATABASE --------------------
-
 conn = sqlite3.connect("parking.db")
 cursor = conn.cursor()
 
@@ -68,12 +62,10 @@ if not rows or not price_data:
     st.error("Block data not found.")
     st.stop()
 
-# Convert to dictionary
 slot_status = {row[0]: row[1] for row in rows}
 
 price = price_data[0]
 
-# -------------------- CALCULATIONS --------------------
 
 all_slots = list(slot_status.values())
 free_count = all_slots.count("F")
@@ -81,7 +73,6 @@ occupied_count = all_slots.count("O")
 total_slots = len(all_slots)
 predicted_occupancy = int((occupied_count / total_slots) * 100)
 
-# -------------------- DASHBOARD DISPLAY --------------------
 
 st.title("Driver Dashboard")
 st.write(f"**Parking Block:** {block}")
@@ -100,7 +91,6 @@ st.markdown("<div class='entry'>⬅ ENTRY ➡</div>", unsafe_allow_html=True)
 
 left, lane, right = st.columns([3,1,3])
 
-# LEFT SIDE (1–10)
 with left:
     for i in range(1, 11):
         cls = "free" if slot_status[i] == "F" else "occupied"
@@ -109,7 +99,6 @@ with left:
             unsafe_allow_html=True
         )
 
-# RIGHT SIDE (11–20)
 with right:
     for i in range(11, 21):
         cls = "free" if slot_status[i] == "F" else "occupied"
@@ -117,3 +106,18 @@ with right:
             f"<div class='slot {cls}'>{i}</div>",
             unsafe_allow_html=True
         )
+st.markdown("---")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("🔙 Back to Home"):
+        st.markdown(
+            '<a href="/" target="_self">Go to Home</a>',
+            unsafe_allow_html=True
+        )
+
+with col2:
+    if st.button("❌ Exit"):
+        st.session_state.clear()
+        st.success("Session ended. You can close the tab or return to Home.")
