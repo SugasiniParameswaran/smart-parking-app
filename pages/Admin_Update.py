@@ -95,10 +95,17 @@ if st.button("Save Changes"):
     conn.close()
 
     st.success("Slots and pricing updated successfully ✅")
-st.markdown("---")
 
-if st.button("🔙 Back to Home"):
-    st.markdown(
-        '<a href="/" target="_self">Go to Home</a>',
-        unsafe_allow_html=True
-    )
+st.markdown("""
+    <a href="/" target="_self">
+        <button style="
+            padding:10px 20px;
+            background-color:#4CAF50;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;">
+            🔙 Back to Home
+        </button>
+    </a>
+""", unsafe_allow_html=True)
