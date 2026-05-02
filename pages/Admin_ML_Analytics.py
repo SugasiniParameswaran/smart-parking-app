@@ -7,13 +7,9 @@ import calendar
 
 st.title("Admin ML Analytics")
 
-# ------------------ CONNECT TO DATABASE ------------------
-
 conn = sqlite3.connect("parking.db")
 df = pd.read_sql_query("SELECT login_time FROM drivers", conn)
 conn.close()
-
-# ------------------ CHECK DATA ------------------
 
 if df.empty:
     st.error("No driver login data found in database.")
@@ -26,14 +22,10 @@ if df.empty:
     st.error("No valid login time data found.")
     st.stop()
 
-# ------------------ EXTRACT FEATURES ------------------
-
 df["year"] = df["login_time"].dt.year
 df["month_num"] = df["login_time"].dt.month
 df["month"] = df["month_num"].apply(lambda x: calendar.month_name[x])
 df["hour_num"] = df["login_time"].dt.hour
-
-# ------------------ AGGREGATED DATA ------------------
 
 agg_df = df.groupby(["year", "month_num", "hour_num"]).size().reset_index(name="customer_count")
 agg_df["month"] = agg_df["month_num"].apply(lambda x: calendar.month_name[x])
@@ -46,16 +38,11 @@ if len(agg_df) < 2:
     st.warning("Not enough data for regression yet. Please add more driver logins at different times.")
     st.stop()
 
-# ------------------ TRAIN MODEL ------------------
-
 X = agg_df[["year", "month_num", "hour_num"]]
 y = agg_df["customer_count"]
 
 model = LinearRegression()
 model.fit(X, y)
-
-# ------------------ DEMAND INSIGHTS ------------------
-
 hour_summary = df.groupby("hour_num").size().reset_index(name="customer_count")
 month_summary = df.groupby(["year", "month_num"]).size().reset_index(name="customer_count")
 
@@ -69,8 +56,6 @@ peak_year_label = int(peak_month_row["year"])
 st.subheader("Demand Insights")
 st.write(f"**Peak Time:** {peak_hour_label}")
 st.write(f"**Peak Month:** {peak_month_label} {peak_year_label}")
-
-# ------------------ GRAPH 1: CUSTOMERS BY TIME ------------------
 
 st.subheader("Customers by Time")
 
@@ -96,8 +81,6 @@ ax1.grid(True)
 
 st.pyplot(fig1)
 
-# ------------------ GRAPH 2: CUSTOMERS BY MONTH ------------------
-
 st.subheader("Customers by Month")
 
 month_summary["month_label"] = month_summary["month_num"].apply(lambda x: calendar.month_name[int(x)])
@@ -112,8 +95,6 @@ ax2.tick_params(axis='x', rotation=45)
 ax2.grid(True)
 
 st.pyplot(fig2)
-
-# ------------------ GRAPH 3: PREDICTED CUSTOMERS BY TIME (ML GRAPH) ------------------
 
 st.subheader("Predicted Customers by Time")
 st.write("This is the Linear Regression output graph.")
@@ -144,3 +125,10 @@ ax3.set_title(f"Predicted Customers by Time for {selected_month_name} {selected_
 ax3.grid(True)
 
 st.pyplot(fig3)
+st.markdown("---")
+
+if st.button("🔙 Back to Home"):
+    st.markdown(
+        '<a href="/" target="_self">Go to Home</a>',
+        unsafe_allow_html=True
+    )
