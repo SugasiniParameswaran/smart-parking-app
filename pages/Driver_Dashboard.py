@@ -108,16 +108,8 @@ with right:
         )
 st.markdown("---")
 
-col1, col2 = st.columns(2)
-
-with col1:
-    if st.button("🔙 Back to Home"):
-        st.markdown(
-            '<a href="/" target="_self">Go to Home</a>',
-            unsafe_allow_html=True
-        )
-
-with col2:
-    if st.button("❌ Exit"):
-        st.session_state.clear()
-        st.success("Session ended. You can close the tab or return to Home.")
+if st.button("🔙 Back to Home"):
+    st.markdown(
+        '<a href="/" target="_self">Go to Home</a>',
+        unsafe_allow_html=True
+    )
