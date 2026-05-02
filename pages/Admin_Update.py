@@ -109,3 +109,17 @@ st.markdown("""
         </button>
     </a>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+    <a href="/Admin_Block" target="_self">
+        <button style="
+            padding:10px 20px;
+            background-color:#4CAF50;
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;">
+            Go Back to Admin Panel
+        </button>
+    </a>
+""", unsafe_allow_html=True)
