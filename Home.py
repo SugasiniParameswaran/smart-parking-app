@@ -1,5 +1,6 @@
 import streamlit as st
 
+# Initialize page
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
@@ -14,8 +15,9 @@ if st.button("Login"):
     else:
         st.session_state.page = "admin_login"
 
+# Navigation
 if st.session_state.page == "driver_login":
-    st.switch_page("Driver_Login")
+    st.switch_page("pages/Driver_Login.py")
 
 elif st.session_state.page == "admin_login":
-    st.switch_page("Admin_Login")
+    st.switch_page("pages/Admin_Login.py")
